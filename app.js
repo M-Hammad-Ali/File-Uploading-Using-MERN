@@ -1,6 +1,17 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const path = require('path');
+const crypto = require('crypto');
+const mongoose = require('mongoose');
+const multer = require('multer');
+const GridFsStorage = require('multer-gridfs-storage');
+const Grid = require("gridfs-stream");
+const methodOverride = require('method-override');
+
 
 const app = express();
+app.use(bodyParser.json());
+app.use(methodOverride('_method'))
 
 app.set('view engine','ejs');
 
@@ -10,4 +21,4 @@ app.get('/',(req,res)=>{
 
 const port = 5000;
 
-app.listen(port,()=>`Server Running at ${port}`);
+app.listen(port,()=>console.log(`Server Running at ${port}`));
