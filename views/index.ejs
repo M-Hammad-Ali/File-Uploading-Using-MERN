@@ -6,11 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Mongo File Upload</title>
+
 </head>
 <body>
     <div class="container">
-        <div class="row">
-            <div class="col-md-6 mr-auto">
+        <div class="row" style="display:flex; justify-content: center;">
+            <div>
                 <h1 class="text-center display-4 my-4">Mongo File Uploads</h1>
                 <form action="/upload" method="post" enctype="multipart/form-data">
                     <div class="custom-file mb-3">
@@ -22,6 +23,27 @@
                     </div>
                     <input type="submit" value="Submit" class="btn btn-primary btn-block">
                 </form>
+                <hr>
+                <% if(files){ %>
+                    <%files.forEach((file)=>{ %>
+                        <div class="card card-body mb-3">
+                            <% if(file.isImage) { %>
+                                <img src="image/<%=file.filename%>" alt="" width="400" height="400">
+                            <% } else if(file.isVideo) { %>
+                                <video src="image/<%= file.filename %>" controls alt="" width="400" height="400"></video>
+                            <% } else { %>
+                                <%= file.filename%>
+                            <% } %>
+                            <form action="/files/<%=file._id%>?_method=DELETE" method="post">
+                                <button class="btn-danger btn-block mt-4">
+                                    Delete
+                                </button>
+                            </form>
+                        </div>
+                    <% }) %>
+                <% }else { %>
+                    <p>No Files to Show</p>
+                <% } %>
             </div>
         </div>
     </div>
